@@ -1,0 +1,5 @@
+*.zip
+*error_file.txt
+*url_wiki_save.txt
+wiki_data/*
+.idea*

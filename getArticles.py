@@ -1,12 +1,17 @@
 import wikipedia
 from bs4 import BeautifulSoup
 import requests
+import os
 def get_articles():
 
     wikipedia.set_lang("no")
     sok = wikipedia.search('"Eksterne baser (Autoritetsdata) GND"', results = 5000)
     pages = []
     error_searchTerm = open("error_file.txt","w")
+
+    if not os.path.exists('wiki_data'):
+        os.makedirs('wiki_data')
+
     for title in sok:
 
         try:
@@ -17,7 +22,7 @@ def get_articles():
             print("Dette var feil")
             error_searchTerm.write(title+'\n')
         text = open("wiki_data/"+title+".txt","w")
-        meta_path = "wiki_data/"+title+"-meta.txt"
+        meta_path = "wiki_data/meta-"+title+".txt"
         meta_file = open(meta_path,"w")
         if get_gnd_url_from_html(page.html()) is not None:
             meta_file.write(get_gnd_url_from_html(page.html()))

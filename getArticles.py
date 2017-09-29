@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import requests
 import os
 def get_articles():
-
     wikipedia.set_lang("no")
     sok = wikipedia.search('"Eksterne baser (Autoritetsdata) GND"', results = 5000)
     pages = []
@@ -33,6 +32,8 @@ def get_articles():
         meta_file.close()
 
 def get_gnd_url_from_html(html_doc):
+    # Denne henter url til det tyske nasjonalbiblioteket fra wikipediasiden. Og kaller deretter funksjonen
+    # som henter deweynr fra Det Tyske Nasjonalbiblioteket (GND) sine sider.
 
     soup = BeautifulSoup(html_doc,'html.parser')
 
@@ -45,6 +46,9 @@ def get_gnd_url_from_html(html_doc):
 
 
 def get_dewey_from_gnd (url):
+
+    #Denne scraper Deweynr fra GND sine sider.
+
     r = requests.get(url)
     soup = BeautifulSoup(r.text)
     td_soup = iter(soup.find_all('td'))
